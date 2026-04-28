@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Metrik · OAuth Hub</title>
+<style>
+  :root { --bg:#0a0a0a; --fg:#f5f5f5; --muted:#8a8a8a; --accent:#fff; --border:#222; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+  main { max-width: 520px; width: 100%; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 6px; }
+  p.lead { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 32px; }
+  ul.flows { list-style: none; display: grid; gap: 12px; }
+  ul.flows a { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; background: #111; border: 1px solid var(--border); border-radius: 10px; color: var(--fg); text-decoration: none; transition: border-color .15s; }
+  ul.flows a:hover { border-color: #444; }
+  ul.flows .name { font-weight: 500; }
+  ul.flows .arrow { color: var(--muted); }
+  footer { margin-top: 48px; color: var(--muted); font-size: 12px; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>METRIK · OAuth Hub</h1>
+  <p class="lead">Fluxos de autorizacao para plataformas sociais. Uso interno.</p>
+  <ul class="flows">
+    <li><a href="./tiktok/auth/"><span class="name">TikTok</span><span class="arrow">→</span></a></li>
+  </ul>
+  <footer>
+    <a href="https://github.com/METRIK-GROUP/social-oauth">github.com/METRIK-GROUP/social-oauth</a>
+  </footer>
+</main>
+</body>
+</html>

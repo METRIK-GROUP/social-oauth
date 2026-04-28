@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Metrik · TikTok OAuth Callback</title>
+<style>
+  :root { --bg:#0a0a0a; --fg:#f5f5f5; --muted:#8a8a8a; --border:#222; --ok:#4ade80; --err:#f87171; --btn:#fff; --btn-fg:#000; --btn-2:#1a1a1a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+  main { max-width: 640px; width: 100%; }
+  .breadcrumb { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .breadcrumb a { color: var(--muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--fg); }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 10px; border-radius: 999px; margin-bottom: 18px; }
+  .status.ok { background: rgba(74, 222, 128, 0.1); color: var(--ok); border: 1px solid rgba(74, 222, 128, 0.25); }
+  .status.err { background: rgba(248, 113, 113, 0.1); color: var(--err); border: 1px solid rgba(248, 113, 113, 0.25); }
+  .status.pending { background: rgba(138, 138, 138, 0.1); color: var(--muted); border: 1px solid var(--border); }
+  p.lead { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+  .card { background: #111; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .card h2 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
+  .code-box { background: #050505; border: 1px solid var(--border); border-radius: 8px; padding: 14px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; word-break: break-all; color: var(--fg); margin-bottom: 10px; max-height: 140px; overflow-y: auto; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  button, .btn { padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity .15s, background .15s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  button.primary, .btn.primary { background: var(--btn); color: var(--btn-fg); border-color: var(--btn); }
+  button.primary:hover, .btn.primary:hover { opacity: .85; }
+  button.secondary, .btn.secondary { background: var(--btn-2); color: var(--fg); }
+  button.secondary:hover, .btn.secondary:hover { background: #222; }
+  .step-list { list-style: none; counter-reset: step; }
+  .step-list li { counter-increment: step; position: relative; padding-left: 32px; margin-bottom: 12px; font-size: 14px; line-height: 1.5; color: var(--fg); }
+  .step-list li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 22px; height: 22px; background: #1a1a1a; border: 1px solid var(--border); border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 600; color: var(--muted); }
+  .copy-feedback { display: inline-block; margin-left: 8px; font-size: 12px; color: var(--ok); opacity: 0; transition: opacity .2s; }
+  .copy-feedback.show { opacity: 1; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  details { margin-top: 12px; }
+  details summary { cursor: pointer; font-size: 12px; color: var(--muted); }
+  details pre { margin-top: 8px; padding: 10px; background: #050505; border: 1px solid var(--border); border-radius: 6px; font-size: 11px; overflow-x: auto; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="breadcrumb"><a href="../../">OAuth Hub</a> · <a href="../auth/">TikTok</a> · Callback</div>
+  <h1>Callback TikTok</h1>
+  <div id="status" class="status pending">Processando...</div>
+
+  <div id="success-block" class="hidden">
+    <p class="lead">Autorizacao recebida. O <code>authorization_code</code> abaixo expira em ~10min e so pode ser usado uma vez. Troque por refresh_token agora.</p>
+
+    <div class="card">
+      <h2>Authorization Code</h2>
+      <div id="code-box" class="code-box"></div>
+      <div class="row">
+        <button class="primary" id="copy-code">Copiar code</button>
+        <span id="copy-feedback" class="copy-feedback">copiado</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Trocar por refresh_token</h2>
+      <p class="hint" style="margin-bottom: 14px;">Escolha uma das opcoes abaixo:</p>
+
+      <ol class="step-list">
+        <li>
+          <strong>Via terminal (gh CLI):</strong>
+          <div class="code-box" style="margin-top: 8px;" id="gh-cmd"></div>
+          <div class="row">
+            <button class="secondary" id="copy-gh">Copiar comando</button>
+            <span id="copy-gh-feedback" class="copy-feedback">copiado</span>
+          </div>
+        </li>
+        <li style="margin-top: 18px;">
+          <strong>Via GitHub Actions UI:</strong>
+          <div class="hint" style="margin: 6px 0 10px;">Cole o code no input "code" e clique em "Run workflow".</div>
+          <a class="btn primary" id="actions-link" href="https://github.com/METRIK-GROUP/social-scheduler/actions/workflows/tiktok-oauth-finish.yml" target="_blank">Abrir Actions →</a>
+        </li>
+      </ol>
+    </div>
+
+    <details>
+      <summary>Detalhes tecnicos</summary>
+      <pre id="debug"></pre>
+    </details>
+  </div>
+
+  <div id="error-block" class="hidden">
+    <p class="lead" id="error-msg"></p>
+    <div class="card">
+      <h2>O que fazer</h2>
+      <p class="hint" id="error-action"></p>
+      <div class="row" style="margin-top: 12px;">
+        <a class="btn primary" href="../auth/">Tentar novamente</a>
+      </div>
+    </div>
+    <details>
+      <summary>Detalhes tecnicos</summary>
+      <pre id="error-debug"></pre>
+    </details>
+  </div>
+</main>
+
+<script>
+  const REPO = "METRIK-GROUP/social-scheduler";
+  const WORKFLOW = "tiktok-oauth-finish.yml";
+
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  const state = params.get("state");
+  const scopes = params.get("scopes") || "";
+  const error = params.get("error") || params.get("error_description");
+
+  const statusEl = document.getElementById("status");
+  const successBlock = document.getElementById("success-block");
+  const errorBlock = document.getElementById("error-block");
+
+  const expectedState = sessionStorage.getItem("tiktok_oauth_state");
+  const startedAt = parseInt(sessionStorage.getItem("tiktok_oauth_started_at") || "0", 10);
+  const elapsedMin = startedAt ? ((Date.now() - startedAt) / 60000).toFixed(1) : "?";
+
+  function showError(title, action, debug) {
+    statusEl.className = "status err";
+    statusEl.textContent = title;
+    document.getElementById("error-msg").textContent = title;
+    document.getElementById("error-action").textContent = action;
+    document.getElementById("error-debug").textContent = debug;
+    errorBlock.classList.remove("hidden");
+  }
+
+  function showSuccess(authCode) {
+    statusEl.className = "status ok";
+    statusEl.textContent = "Autorizado";
+
+    document.getElementById("code-box").textContent = authCode;
+
+    const ghCmd = `gh workflow run ${WORKFLOW} -R ${REPO} -f code='${authCode}'`;
+    document.getElementById("gh-cmd").textContent = ghCmd;
+
+    document.getElementById("debug").textContent = JSON.stringify({
+      code_length: authCode.length,
+      state_match: state === expectedState,
+      scopes_granted: scopes.split(",").filter(Boolean),
+      elapsed_minutes: elapsedMin
+    }, null, 2);
+
+    successBlock.classList.remove("hidden");
+
+    document.getElementById("copy-code").addEventListener("click", () => {
+      navigator.clipboard.writeText(authCode).then(() => {
+        const fb = document.getElementById("copy-feedback");
+        fb.classList.add("show");
+        setTimeout(() => fb.classList.remove("show"), 1500);
+      });
+    });
+
+    document.getElementById("copy-gh").addEventListener("click", () => {
+      navigator.clipboard.writeText(ghCmd).then(() => {
+        const fb = document.getElementById("copy-gh-feedback");
+        fb.classList.add("show");
+        setTimeout(() => fb.classList.remove("show"), 1500);
+      });
+    });
+
+    sessionStorage.removeItem("tiktok_oauth_state");
+    sessionStorage.removeItem("tiktok_oauth_started_at");
+  }
+
+  if (error) {
+    showError(
+      "TikTok recusou a autorizacao",
+      "Verifique se o app esta Live no painel TikTok Developer e se o redirect URI esta registrado exatamente como esta pagina.",
+      JSON.stringify({ error, raw_query: window.location.search }, null, 2)
+    );
+  } else if (!code) {
+    showError(
+      "Resposta invalida do TikTok",
+      "Nenhum authorization_code recebido. Tente novamente a partir do inicio do fluxo.",
+      JSON.stringify({ raw_query: window.location.search }, null, 2)
+    );
+  } else if (!expectedState) {
+    showError(
+      "State CSRF ausente",
+      "Esta sessao nao iniciou o fluxo OAuth. Reabra a pagina inicial de auth no MESMO navegador e tente novamente.",
+      JSON.stringify({ received_state: state, expected_state: null }, null, 2)
+    );
+  } else if (state !== expectedState) {
+    showError(
+      "State CSRF nao bate",
+      "Possivel ataque CSRF ou sessao corrompida. Recomece o fluxo do zero.",
+      JSON.stringify({ received_state: state, expected_state: expectedState }, null, 2)
+    );
+  } else {
+    showSuccess(code);
+  }
+</script>
+</body>
+</html>
