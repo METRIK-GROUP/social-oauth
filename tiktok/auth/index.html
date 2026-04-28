@@ -28,8 +28,8 @@
 <body>
 <main>
   <div class="breadcrumb"><a href="../../">OAuth Hub</a> · TikTok</div>
-  <h1>Conectar TikTok</h1>
-  <p class="lead">Autoriza o Metrik a publicar videos e ler info basica da conta TikTok conectada. Precisa estar logado na conta TikTok correta antes de prosseguir.</p>
+  <h1>Conectar TikTok <span style="font-size:11px;color:#fbbf24;border:1px solid #fbbf24;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:8px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;">Sandbox</span></h1>
+  <p class="lead">Autoriza o Metrik a publicar videos e ler info basica da conta TikTok conectada. So funciona para target users cadastrados no app Sandbox. Precisa estar logado na conta TikTok correta antes de prosseguir.</p>
 
   <div class="card">
     <h2>Permissoes solicitadas</h2>
@@ -43,13 +43,14 @@
   <button id="authorize">Autorizar TikTok</button>
 
   <p class="meta">
-    Client key: <code id="client-key">awtnxm89aqpobaio</code><br>
+    Client key (Sandbox): <code id="client-key">sbawk9jn8d77gep3py</code><br>
     Redirect: <code id="redirect-uri"></code>
   </p>
 </main>
 
 <script>
-  const CLIENT_KEY = "awtnxm89aqpobaio";
+  // Sandbox env. Trocar para client_key de Production quando o app for aprovado.
+  const CLIENT_KEY = "sbawk9jn8d77gep3py";
   const REDIRECT_URI = "https://metrik-group.github.io/social-oauth/tiktok/callback/";
   const SCOPES = "user.info.basic,video.publish,video.upload";
   const AUTH_URL = "https://www.tiktok.com/v2/auth/authorize/";

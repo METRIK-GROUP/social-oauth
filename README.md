@@ -35,7 +35,17 @@ A troca de `code` por `refresh_token` (que usa `client_secret`) acontece em GitH
 
 ## TikTok
 
-- App ID painel: https://developers.tiktok.com/apps/
+- App: METRIK Media Manager
+- Painel: https://developers.tiktok.com/apps/
+- Ambiente atual: **Sandbox** (so target users autorizados; sem review necessaria)
 - Repo de execucao: [METRIK-GROUP/social-scheduler](https://github.com/METRIK-GROUP/social-scheduler)
 - Workflow OAuth-finish: `tiktok-oauth-finish.yml`
-- Refresh token: 365 dias de validade — reautorizar 1x/ano
+- Refresh token: 365 dias de validade, reautorizar 1x/ano
+
+### Migrar para Production
+
+Quando o app for aprovado em Production:
+
+1. Trocar `CLIENT_KEY` em `tiktok/auth/index.html` pelo client_key de Production
+2. Atualizar secrets `TIKTOK_PROD_CLIENT_KEY` e `TIKTOK_PROD_CLIENT_SECRET` em social-scheduler (em vez dos `_SANDBOX_`)
+3. Reautorizar o fluxo OAuth uma vez (refresh tokens nao migram entre ambientes)
