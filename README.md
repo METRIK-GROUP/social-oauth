@@ -2,7 +2,7 @@
 
 Hub estatico de fluxos OAuth para plataformas sociais do METRIK. Hospedado em GitHub Pages.
 
-URL producao: https://metrik-group.github.io/social-oauth/
+URL producao: https://oauth.institutometrik.com.br/
 
 ## Plataformas
 
