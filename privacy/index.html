@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>METRIK Media Manager — Política de Privacidade</title>
+<style>
+  :root { --bg:#0a0a0a; --fg:#f5f5f5; --muted:#8a8a8a; --border:#222; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--fg); padding: 40px 24px; line-height: 1.7; }
+  main { max-width: 720px; margin: 0 auto; }
+  .breadcrumb { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+  .breadcrumb a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .updated { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; letter-spacing: -0.01em; }
+  p, li { font-size: 15px; color: #d4d4d4; margin-bottom: 12px; }
+  ul { padding-left: 22px; margin-bottom: 12px; }
+  code { background: #1a1a1a; padding: 2px 8px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 13px; }
+  a { color: #f5f5f5; }
+</style>
+</head>
+<body>
+<main>
+  <div class="breadcrumb"><a href="../">OAuth Hub</a> · Privacidade</div>
+  <h1>Política de Privacidade</h1>
+  <p class="updated">METRIK Media Manager · Última atualização: 28 de abril de 2026</p>
+
+  <h2>1. Quem somos</h2>
+  <p>O METRIK Media Manager é uma ferramenta interna de uso single-user, operada por Rodrigo Rosar (METRIK Instituto), CNPJ disponível mediante solicitação. Contato: <a href="mailto:rodrigo@rodrigorosar.com.br">rodrigo@rodrigorosar.com.br</a>.</p>
+
+  <h2>2. Quais dados coletamos</h2>
+  <p>O aplicativo acessa, via APIs oficiais do TikTok, Instagram e Meta, exclusivamente os seguintes dados da conta autorizada pelo próprio criador:</p>
+  <ul>
+    <li>Identificadores públicos da conta (open_id, username, avatar)</li>
+    <li>Tokens de autenticação OAuth (access_token e refresh_token)</li>
+    <li>Métricas públicas de posts publicados pela própria ferramenta (visualizações, curtidas, comentários, salvamentos, compartilhamentos)</li>
+    <li>Conteúdo (vídeo MP4 + legenda + hashtags) carregado pelo próprio criador no calendário editorial do Notion</li>
+  </ul>
+  <p>Não acessamos contatos, mensagens, listas de seguidores nem qualquer dado de terceiros. A ferramenta opera apenas sobre a conta única do criador autorizado.</p>
+
+  <h2>3. Como usamos os dados</h2>
+  <p>Os dados são usados exclusivamente para:</p>
+  <ul>
+    <li>Publicar vídeos no TikTok do criador autorizado, a partir do calendário no Notion</li>
+    <li>Atualizar o calendário com o ID e métricas dos posts publicados</li>
+    <li>Renovar tokens de acesso automaticamente (refresh_token) sem intervenção manual</li>
+  </ul>
+
+  <h2>4. Onde os dados ficam armazenados</h2>
+  <ul>
+    <li><strong>Tokens OAuth</strong> são armazenados em GitHub Secrets do repositório privado do criador, criptografados em repouso pela infraestrutura do GitHub.</li>
+    <li><strong>Vídeos</strong> são armazenados em bucket privado no Supabase Storage, com acesso controlado por chave de serviço.</li>
+    <li><strong>Metadados</strong> (legendas, IDs de post, métricas) são armazenados no calendário Notion privado do criador.</li>
+  </ul>
+  <p>Nenhum dado é compartilhado com terceiros. Não há servidor backend público nem banco de dados com dados de outros usuários.</p>
+
+  <h2>5. Por quanto tempo guardamos</h2>
+  <ul>
+    <li>Tokens são guardados enquanto o app permanecer autorizado pelo criador. A revogação encerra imediatamente o acesso.</li>
+    <li>IDs de posts publicados e métricas permanecem no Notion indefinidamente, como histórico editorial do criador.</li>
+    <li>Vídeos no Supabase são removidos manualmente pelo criador conforme política interna.</li>
+  </ul>
+
+  <h2>6. Direitos do criador (você)</h2>
+  <p>Como única pessoa cuja conta é processada por este app, o criador pode a qualquer momento:</p>
+  <ul>
+    <li>Revogar a autorização do app diretamente no painel TikTok (Settings &gt; Apps and websites)</li>
+    <li>Solicitar a exclusão de tokens armazenados (basta apagar os GitHub Secrets correspondentes)</li>
+    <li>Apagar todo o histórico no Notion e Supabase a qualquer momento</li>
+  </ul>
+
+  <h2>7. Cookies</h2>
+  <p>As páginas de OAuth deste hub usam apenas <code>sessionStorage</code> do navegador para guardar um estado CSRF temporário durante o fluxo de autorização. Nenhum cookie persistente é colocado, nenhum tracker de terceiros é carregado. Páginas têm <code>noindex,nofollow</code>.</p>
+
+  <h2>8. Alterações nesta política</h2>
+  <p>Mudanças serão publicadas nesta mesma URL com a data de atualização revisada. Como é uma ferramenta single-user, mudanças materiais são comunicadas diretamente ao criador autorizado.</p>
+
+  <h2>9. Contato</h2>
+  <p>Dúvidas, solicitações ou denúncias: <a href="mailto:rodrigo@rodrigorosar.com.br">rodrigo@rodrigorosar.com.br</a></p>
+</main>
+</body>
+</html>
